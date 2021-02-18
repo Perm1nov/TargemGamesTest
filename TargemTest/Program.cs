@@ -7,16 +7,16 @@ namespace StringCalc
     {
         static void Main(string[] args)
         {
-            var calc = new Calculator();
+            var calculator = new Calculator();
             while (true)
             {
                 Console.Write("Enter expression : ");
-                var inpuStr = Console.ReadLine();
+                var inpuLine = Console.ReadLine();
 
                 double? result;
                 try
                 {
-                    result = calc.Calculate(inpuStr);
+                    result = calculator.Calculate(inpuLine);
                 }
                 catch (InvalidOperationException)
                 {

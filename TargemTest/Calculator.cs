@@ -9,28 +9,28 @@ namespace StringCalc
         public double? Calculate(string expression)
         {
             var expressionAsRPN = StringConverter.StringToRPN(expression);
-            var calcStack = new Stack<double>();
+            var calculationStack = new Stack<double>();
             while (expressionAsRPN.Count > 0)
             {
-                var t = expressionAsRPN.Dequeue();
-                switch (t)
+                var operatorOrNumber = expressionAsRPN.Dequeue();
+                switch (operatorOrNumber)
                 {
-                    case "+": calcStack.Push(calcStack.Pop() + calcStack.Pop()); break;
+                    case "+": calculationStack.Push(calculationStack.Pop() + calculationStack.Pop()); break;
                     case "-":
-                        var b = calcStack.Pop();
-                        var a = calcStack.Pop();
-                        calcStack.Push(a - b); break;
-                    case "*": calcStack.Push(calcStack.Pop() * calcStack.Pop()); break;
+                        var b = calculationStack.Pop();
+                        var a = calculationStack.Pop();
+                        calculationStack.Push(a - b); break;
+                    case "*": calculationStack.Push(calculationStack.Pop() * calculationStack.Pop()); break;
                     case "/":
-                        var b1 = calcStack.Pop();
-                        var a1 = calcStack.Pop();
-                        calcStack.Push(a1 / b1); break;
-                    default: calcStack.Push(double.Parse(t, CultureInfo.InvariantCulture)); break;
+                        var b1 = calculationStack.Pop();
+                        var a1 = calculationStack.Pop();
+                        calculationStack.Push(a1 / b1); break;
+                    default: calculationStack.Push(double.Parse(operatorOrNumber, CultureInfo.InvariantCulture)); break;
                 }
             }
-            if(calcStack.Count>1)
+            if(calculationStack.Count>1)
                 return null;
-            if (calcStack.TryPop(out double x))
+            if (calculationStack.TryPop(out double x))
                 return x;
             return null;
         }
