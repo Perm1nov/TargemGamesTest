@@ -1,21 +1,15 @@
 ﻿using StringCalcRPN;
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
+using System.Globalization;
 
 namespace StringCalc
 {
     class Calculator
     {
-        public string ErrorMessage { get; set; }
         public double? Calculate(string expression)
         {
+
             var expressionAsRPN = StringConverter.StringToRPN(expression);
-            if (expressionAsRPN == null)
-                throw new Exception("Check correctness of expression");
             var calcStack = new Stack<double>();
             while (expressionAsRPN.Count > 0)
             {
@@ -32,14 +26,14 @@ namespace StringCalc
                         var b1 = calcStack.Pop();
                         var a1 = calcStack.Pop();
                         calcStack.Push(a1 / b1); break;
-                    default: calcStack.Push(double.Parse(t)); break;
+                    default: calcStack.Push(double.Parse(t, CultureInfo.InvariantCulture)); break;
                 }
             }
             if (calcStack.TryPop(out double x))
-            return x;
-            return null;          
+                return x;
+            return null;
         }
 
-        
+
     }
 }

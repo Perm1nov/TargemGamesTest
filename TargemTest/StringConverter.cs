@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Globalization;
 
 namespace StringCalcRPN
 {
@@ -8,16 +8,18 @@ namespace StringCalcRPN
     {
         public static Queue<string> StringToRPN(string expression)
         {
-            string[] expressionTokens = StringToCorrectString(expression).Split("");
+            string[] expressionTokens = StringToCorrectString(expression).Split(" ");
+            if (!IsCorrectBrackets(expression))
+                throw new Exception("Opening and closing brackets doesn't match");
             var outputLine = new Queue<string>();
             var stack = new Stack<string>();
             foreach (var ch in expressionTokens)
             {
-                double val;
+
                 switch (ch)
                 {
                     case "": break;
-                    case String _ when double.TryParse(ch, out val):
+                    case String _ when double.TryParse(ch, NumberStyles.Number, CultureInfo.InvariantCulture, out double val):
                         outputLine.Enqueue(ch);
                         break;
                     case "+":
@@ -54,8 +56,8 @@ namespace StringCalcRPN
                         }
                         break;
                     default:
-                        Console.WriteLine($"\" {ch} \" <- is not a number or operator");
-                        return null;
+                        throw new Exception($"\" {ch} \" <- is not a number or operator");
+
                 }
             }
             while (stack.Count > 0)
@@ -72,6 +74,24 @@ namespace StringCalcRPN
             expression = expression.Replace("(", " ( ");
             expression = expression.Replace(")", " ) ");
             return expression;
+        }
+        private static bool IsCorrectBrackets(string expression)
+        {
+            int count = 0;
+            foreach(var c in expression)
+            {
+                if (c == '(')
+                {
+                    count++;
+                    continue;
+                }
+                if (c == ')')
+                {
+                    count--;
+                    continue;
+                }
+            }
+            return count == 0;
         }
     }
 }
