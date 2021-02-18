@@ -33,7 +33,10 @@ namespace StringCalc
                 }
 
                 if (result is null)
+                {
+                    Console.WriteLine("Expression is incorrect");
                     continue;
+                }
                 Console.WriteLine(result == double.PositiveInfinity ? "infinty" : result);
             }
         }

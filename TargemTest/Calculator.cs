@@ -28,6 +28,8 @@ namespace StringCalc
                     default: calcStack.Push(double.Parse(t, CultureInfo.InvariantCulture)); break;
                 }
             }
+            if(calcStack.Count>1)
+                return null;
             if (calcStack.TryPop(out double x))
                 return x;
             return null;
