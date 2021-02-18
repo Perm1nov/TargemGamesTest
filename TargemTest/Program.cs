@@ -12,33 +12,29 @@ namespace StringCalc
             {
                 Console.Write("Enter expression : ");
                 var inpuStr = Console.ReadLine();
-/*                if (String.IsNullOrEmpty(inpuStr))
-                {
-                    Console.WriteLine("String is null or empty");
-                    continue;
-                }*/
-                double? result = null;
+
+                double? result;
                 try
                 {
                     result = calc.Calculate(inpuStr);
                 }
-                catch (InvalidOperationException e)
+                catch (InvalidOperationException)
                 {
                     Console.WriteLine("Expression is incorrect");
-                    Console.WriteLine(e.Message);
-                    Console.WriteLine(e.StackTrace);
+                    /* Console.WriteLine(e.Message);
+                    Console.WriteLine(e.StackTrace);*/
                     continue;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e.Message);
-                    Console.WriteLine(e.StackTrace);
+                    /*Console.WriteLine(e.StackTrace);*/
                     continue;
                 }
 
-                if(result == null)
+                if (result is null)
                     continue;
-                Console.WriteLine(result == double.PositiveInfinity ? "infinty": result);
+                Console.WriteLine(result == double.PositiveInfinity ? "infinty" : result);
             }
         }
     }

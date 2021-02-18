@@ -19,7 +19,6 @@ namespace StringCalcRPN
             var stack = new Stack<string>();
             foreach (var ch in expressionTokens)
             {
-
                 switch (ch)
                 {
                     case "": break;
@@ -61,7 +60,6 @@ namespace StringCalcRPN
                         break;
                     default:
                         throw new Exception($"\" {ch} \" <- is not a number or operator");
-
                 }
             }
             while (stack.Count > 0)
@@ -72,7 +70,7 @@ namespace StringCalcRPN
         {
             expression = expression.Replace(" ", "");
             expression = expression.Replace("-", " - ");
-            for (int i = expression.IndexOf('-'); i < expression.Length; i++) //????? 
+            for (int i = expression.IndexOf('-'); i < expression.Length; i++) //?
             {
                 if (i > 1)
                 {
@@ -85,7 +83,7 @@ namespace StringCalcRPN
                     expression = expression.Remove(i + 1, 1);
                 else break;
             }
-            expression = expression.Replace("+", " + ");    
+            expression = expression.Replace("+", " + ");
             expression = expression.Replace("*", " * ");
             expression = expression.Replace("/", " / ");
             expression = expression.Replace("(", " ( ");
@@ -95,7 +93,7 @@ namespace StringCalcRPN
         private static bool IsCorrectBrackets(string expression)
         {
             int count = 0;
-            foreach(var c in expression)
+            foreach (var c in expression)
             {
                 if (c == '(')
                 {
