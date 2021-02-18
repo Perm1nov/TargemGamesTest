@@ -7,18 +7,12 @@ namespace MyList
     {
         public static void Main(string[] args)
         {
-            var list = new MyList<double>() { 1, 2, 3, 4, 5, 6 };
-            list.Add(1);
+            MyList<double> list = new MyList<double>() {1,2,3,4,5,6,7,8,9,10,11,12};
             Console.WriteLine(list.Count);
-            list.Add(2);
-            var array = new double[10];
-            //list.RemoveAt(0);
-            list.CopyTo(array, 2);
+            list.RemoveAt(5);   
             Console.WriteLine(list.Contains(2.0));
             Console.WriteLine(list.Contains(1.0));
             Console.WriteLine(list.Contains(1.1));
-            Console.WriteLine(Convert.ToInt32("100*2-5"));
-            Console.WriteLine;
             foreach (var e in list)
             {
                 Console.WriteLine(e);

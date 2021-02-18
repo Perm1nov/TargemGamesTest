@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 class MyList<T> : IList<T>
 {
     private T[] list = new T[0];
-    private int counter = 0;
+    private int size = 0;
     public T this[int index]
     {
         get => list[index];
@@ -20,32 +19,32 @@ class MyList<T> : IList<T>
         else throw new ArgumentOutOfRangeException(size.ToString());
     }
 
-    public int Count => counter;
+    public int Count => size;
 
     public bool IsReadOnly => false;
 
     public void Add(T item)
     {
-        if (list.Length > counter)
+        if (list.Length > size)
         {
-            list[counter++] = item;
+            list[size++] = item;
         }
         else
         {
-            list.CopyTo(list = new T[counter + 10], 0);
-            list[counter++] = item;
+            list.CopyTo(list = new T[size + 10], 0);
+            list[size++] = item;
         }
     }
 
     public void Clear()
     {
         list = new T[0];
-        counter = 0;
+        size = 0;
     }
 
     public bool Contains(T item)
     {
-        for (int i = 0; i < counter; i++)
+        for (int i = 0; i < size; i++)
         {
             if (list[i].Equals(item))
             {
@@ -59,20 +58,20 @@ class MyList<T> : IList<T>
     {
         try
         {
-            for (int i = 0; i < counter; i++)
+            for (int i = 0; i < size; i++)
             {
                 array[arrayIndex + i] = list[i];
             }
         }
-        catch (IndexOutOfRangeException ex)
+        catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
+            throw ex;
         }
     }
 
     public IEnumerator<T> GetEnumerator()
     {
-        for (int i = 0; i < counter; i++)
+        for (int i = 0; i < size; i++)
         {
             yield return list[i];
         }
@@ -80,7 +79,7 @@ class MyList<T> : IList<T>
 
     public int IndexOf(T item)
     {
-        for (int i = 0; i < counter; i++)
+        for (int i = 0; i < size; i++)
         {
             if (list[i].Equals(item))
                 return i;
@@ -90,10 +89,11 @@ class MyList<T> : IList<T>
 
     public void Insert(int index, T item)
     {
-        if (index < counter)
+        if (index < size & index >= 0)
         {
             list[index] = item;
         }
+        else throw new IndexOutOfRangeException(index.ToString());
     }
 
     public bool Remove(T item)
@@ -110,7 +110,13 @@ class MyList<T> : IList<T>
 
     public void RemoveAt(int index)
     {
-        list = list.Where((val, ind) => ind != index).ToArray();
+        if (index < size & index >= 0)
+        {
+            Array.Copy(list, index + 1, list, index, size - index);
+            size--;
+        }
+        else throw new IndexOutOfRangeException(index.ToString());
+
     }
 
     IEnumerator IEnumerable.GetEnumerator()
