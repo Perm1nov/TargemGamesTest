@@ -8,7 +8,6 @@ namespace StringCalc
     {
         public double? Calculate(string expression)
         {
-
             var expressionAsRPN = StringConverter.StringToRPN(expression);
             var calcStack = new Stack<double>();
             while (expressionAsRPN.Count > 0)

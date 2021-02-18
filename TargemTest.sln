@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StringCalcRPN", "TargemTest\StringCalcRPN.csproj", "{A3076BA5-38AD-4F22-A2E0-064EBC8562BF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyListG", "MyListG\MyListG.csproj", "{F5688E8E-CB8F-4C42-9D1A-665901F4BE37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyList", "MyListG\MyList.csproj", "{F5688E8E-CB8F-4C42-9D1A-665901F4BE37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

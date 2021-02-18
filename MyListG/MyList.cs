@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 class MyList<T> : IList<T>
 {
-    private T[] list = new T[0];
-    private int size = 0;
+    private T[] list;
+    private int size;
     public T this[int index]
     {
         get => list[index];
         set => list[index] = value;
     }
-    public MyList() { }
+    public MyList() { size = 0; list = new T[size]; }
     public MyList(int size)
     {
         if (size >= 0)
