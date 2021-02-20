@@ -12,7 +12,7 @@ namespace StringCalcRPN
         /// </summary>
         public static Queue<string> StringToRPN(string expression)
         {
-            string[] expressionTokens = StringToCorrectString(expression).Split(" ");
+            string[] expressionTokens = StringToCorrectString(expression);
             if (!IsCorrectBrackets(expression))
                 throw new Exception("Opening and closing brackets doesn't match");
             var outputLine = new Queue<string>();
@@ -30,9 +30,8 @@ namespace StringCalcRPN
                         while (operatorsStack.Count > 0)
                         {
                             if (operatorsStack.Peek() == "+" || operatorsStack.Peek() == "-" || operatorsStack.Peek() == "*" || operatorsStack.Peek() == "/")
-                            {
                                 outputLine.Enqueue(operatorsStack.Pop());
-                            }
+                            else break;
                         }
                         operatorsStack.Push(ch);
                         break;
@@ -50,13 +49,11 @@ namespace StringCalcRPN
                         operatorsStack.Push(ch);
                         break;
                     case ")":
-                        while (true)
+                        while (operatorsStack.Peek() != "(")
                         {
-                            var t = operatorsStack.Pop();
-                            if (t == "(")
-                                break;
-                            outputLine.Enqueue(t);
+                            outputLine.Enqueue(operatorsStack.Pop());
                         }
+                        operatorsStack.Pop();
                         break;
                     default:
                         throw new Exception($"\" {ch} \" <- is not a number or operator");
@@ -66,7 +63,7 @@ namespace StringCalcRPN
                 outputLine.Enqueue(operatorsStack.Pop());
             return outputLine;
         }
-        private static string StringToCorrectString(string expression)
+        private static string[] StringToCorrectString(string expression)
         {
             expression = expression.Replace(" ", "");
             expression = expression.Replace("-", " - ");
@@ -88,7 +85,7 @@ namespace StringCalcRPN
             expression = expression.Replace("/", " / ");
             expression = expression.Replace("(", " ( ");
             expression = expression.Replace(")", " ) ");
-            return expression;
+            return expression.Split(" ");
         }
         private static bool IsCorrectBrackets(string expression)
         {
