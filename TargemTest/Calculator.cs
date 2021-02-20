@@ -25,7 +25,7 @@ namespace StringCalc
                         var b1 = calculationStack.Pop();
                         var a1 = calculationStack.Pop();
                         calculationStack.Push(a1 / b1); break;
-                    default: calculationStack.Push(double.Parse(operatorOrNumber, CultureInfo.InvariantCulture)); break;
+                    default: calculationStack.Push(double.Parse(operatorOrNumber)); break;
                 }
             }
             if(calculationStack.Count>1)

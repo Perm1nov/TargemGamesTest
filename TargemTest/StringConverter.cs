@@ -22,14 +22,14 @@ namespace StringCalcRPN
                 switch (ch)
                 {
                     case "": break;
-                    case string _ when double.TryParse(ch, NumberStyles.Number, CultureInfo.InvariantCulture, out double val):
+                    case string _ when double.TryParse(ch, out double val):
                         outputLine.Enqueue(ch);
                         break;
                     case "+":
                     case "-":
-                        if (operatorsStack.Count > 0)
+                        while (operatorsStack.Count > 0)
                         {
-                            while (operatorsStack.Peek() == "+" || operatorsStack.Peek() == "-" || operatorsStack.Peek() == "*" || operatorsStack.Peek() == "/")
+                            if (operatorsStack.Peek() == "+" || operatorsStack.Peek() == "-" || operatorsStack.Peek() == "*" || operatorsStack.Peek() == "/")
                             {
                                 outputLine.Enqueue(operatorsStack.Pop());
                             }
@@ -70,7 +70,7 @@ namespace StringCalcRPN
         {
             expression = expression.Replace(" ", "");
             expression = expression.Replace("-", " - ");
-            for (int i = expression.IndexOf('-'); i < expression.Length; i++) //?
+            for (int i = expression.IndexOf('-'); i < expression.Length; i++)
             {
                 if (i > 1)
                 {
