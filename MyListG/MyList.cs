@@ -46,7 +46,7 @@ class MyList<T> : IList<T>
     {
         if ((Object)item == null)
         {
-            for (int i = 0; i < Count; i++)
+            for (int i = 0; i < size; i++)
                 if ((Object)list[i] == null)
                     return true;
             return false;
@@ -62,7 +62,7 @@ class MyList<T> : IList<T>
 
     public void CopyTo(T[] array, int arrayIndex)
     {
-        Array.Copy(list, 0, array, arrayIndex, Count);
+        Array.Copy(list, 0, array, arrayIndex, size);
     }
 
     public IEnumerator<T> GetEnumerator()
@@ -77,7 +77,7 @@ class MyList<T> : IList<T>
     {
         if ((Object)item == null)
         {
-            for (int i = 0; i < Count; i++)
+            for (int i = 0; i < size; i++)
                 if ((Object)list[i] == null)
                     return i;
         }
@@ -121,7 +121,7 @@ class MyList<T> : IList<T>
             Array.Copy(list, index + 1, list, index, size - index);
             size--;
         }
-        else throw new IndexOutOfRangeException(index.ToString());
+        else throw new ArgumentOutOfRangeException(index.ToString());
 
     }
 
