@@ -44,29 +44,25 @@ class MyList<T> : IList<T>
 
     public bool Contains(T item)
     {
-        for (int i = 0; i < size; i++)
+        if ((Object)item == null)
         {
-            if (list[i].Equals(item))
-            {
-                return true;
-            }
+            for (int i = 0; i < Count; i++)
+                if ((Object)list[i] == null)
+                    return true;
+            return false;
         }
-        return false;
+        else
+        {
+            for (int i = 0; i < size; i++)
+                if (list[i].Equals(item))
+                    return true;
+            return false;
+        }
     }
 
     public void CopyTo(T[] array, int arrayIndex)
     {
-        try
-        {
-            for (int i = 0; i < size; i++)
-            {
-                array[arrayIndex + i] = list[i];
-            }
-        }
-        catch (Exception ex)
-        {
-            throw ex;
-        }
+        Array.Copy(list, 0, array, arrayIndex, Count);
     }
 
     public IEnumerator<T> GetEnumerator()
@@ -79,27 +75,37 @@ class MyList<T> : IList<T>
 
     public int IndexOf(T item)
     {
-        for (int i = 0; i < size; i++)
+        if ((Object)item == null)
         {
-            if (list[i].Equals(item))
-                return i;
+            for (int i = 0; i < Count; i++)
+                if ((Object)list[i] == null)
+                    return i;
+        }
+        else
+        {
+            for (int i = 0; i < size; i++)
+            {
+                if (list[i].Equals(item))
+                    return i;
+            }
         }
         return -1;
     }
 
     public void Insert(int index, T item)
     {
-        if (index < size & index >= 0)
-        {
-            list[index] = item;
-        }
-        else throw new IndexOutOfRangeException(index.ToString());
+        if (size == list.Length)
+            list.CopyTo(list = new T[size + 10], 0);
+        if (index < size)
+            Array.Copy(list, index, list, index + 1, size - index);
+        list[index] = item;
+        size++;
     }
 
     public bool Remove(T item)
     {
         var index = IndexOf(item);
-        if (index>=0)
+        if (index >= 0)
         {
             RemoveAt(index);
             return true;
